@@ -1,0 +1,6 @@
+{
+  "name": "Impasto",
+  "description": "Calculadora de masa de pizza napolitana AVPN con fermentación Directa, Biga, Poolish y Autólisis",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

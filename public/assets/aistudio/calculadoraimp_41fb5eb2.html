@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)https://calculadora.chefmanager.pro/ -->
+<html lang="pt-BR" data-abacus-ext="true"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1B4F8A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Impasto">
+<link rel="manifest" href="https://calculadora.chefmanager.pro/manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 192 192&#39;%3E%3Crect width=&#39;192&#39; height=&#39;192&#39; rx=&#39;40&#39; fill=&#39;%231B4F8A&#39;/%3E%3Ctext x=&#39;96&#39; y=&#39;130&#39; font-size=&#39;100&#39; text-anchor=&#39;middle&#39;%3E%F0%9F%8D%95%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Calculadora de massa napolitana AVPN — Biga, Poolish, Autólise">
+<title>Impasto · Calculadora Napolitana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./Impasto · Calculadora Napolitana_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F2EFE7;
+    --surface: #FFFFFF;
+    --surface2: #EBF0F7;
+    --border: #D6DFEC;
+    --text: #1A2840;
+    --muted: #7A8EA8;
+    --accent: #1B4F8A;
+    --accent-dim: rgba(27,79,138,0.08);
+    --accent-mid: rgba(27,79,138,0.18);
+    --gold: #9A6F2E;
+    --gold-dim: rgba(200,169,110,0.15);
+    --blue-light: #3A7BD5;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 2px 12px rgba(27,79,138,0.08);
+    --warn: #A34A1F;
+    --warn-bg: rgba(163,74,31,0.08);
+    --warn-border: rgba(163,74,31,0.28);
+  }
+
+  .aviso {
+    display: none;
+    margin: 12px 0 0;
+    padding: 12px 14px;
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
+    border-radius: var(--radius-sm);
+    color: var(--warn);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .aviso.visible { display: block; }
+
+  .num-display.vazio { color: var(--muted); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  /* HEADER — azulejo mediterrâneo como assinatura */
+  header {
+    background: var(--accent);
+    padding: 36px 20px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Padrão de azulejo em SVG inline via pseudo-elemento */
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='8' fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1'/%3E%3Cpath d='M0 20h40M20 0v40' stroke='rgba(255,255,255,0.05)' stroke-width='1'/%3E%3Ccircle cx='0' cy='0' r='5' fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1'/%3E%3Ccircle cx='40' cy='0' r='5' fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1'/%3E%3Ccircle cx='0' cy='40' r='5' fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1'/%3E%3Ccircle cx='40' cy='40' r='5' fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #C8A96E, #1B4F8A, #C8A96E);
+  }
+
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    backdrop-filter: blur(4px);
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 7vw, 44px);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    color: #FFFFFF;
+    position: relative;
+  }
+
+  header h1 span { color: #C8A96E; }
+
+  .logo-wordmark {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.5px;
+  }
+
+  .avpn-badge {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 4px 14px;
+    border: 1px solid rgba(200,169,110,0.5);
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #C8A96E;
+    position: relative;
+  }
+
+  /* MAIN LAYOUT */
+  main {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 28px 0 12px;
+  }
+
+  /* TÉCNICA SELECTOR */
+  .tecnica-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .tecnica-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    user-select: none;
+    box-shadow: var(--shadow);
+  }
+
+  .tecnica-card:hover {
+    border-color: var(--blue-light);
+    box-shadow: 0 4px 16px rgba(27,79,138,0.12);
+  }
+
+  .tecnica-card.active {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+    box-shadow: 0 0 0 3px var(--accent-mid);
+  }
+
+  .tecnica-icon { font-size: 22px; margin-bottom: 6px; display: block; }
+
+  .tecnica-name {
+    font-size: 13px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 3px;
+    color: var(--text);
+  }
+
+  .tecnica-desc {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* INPUTS */
+  .input-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 8px;
+    box-shadow: var(--shadow);
+  }
+
+  .input-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .input-label {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+    flex: 1;
+  }
+
+  .input-sublabel {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .number-input-wrap {
+    display: flex;
+    align-items: center;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .num-btn {
+    background: none;
+    border: none;
+    color: var(--accent);
+    width: 36px; height: 40px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+  .num-btn:hover { background: var(--accent-dim); }
+
+  .num-display {
+    min-width: 48px;
+    width: 62px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    color: var(--text);
+    padding: 0 4px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    outline: none;
+    -moz-appearance: textfield;
+  }
+  .num-display::-webkit-outer-spin-button,
+  .num-display::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .num-display:focus {
+    background: var(--surface);
+    box-shadow: inset 0 0 0 2px var(--accent-mid);
+    border-radius: 4px;
+  }
+
+  /* SLIDER */
+  .slider-wrap { margin-top: 14px; }
+
+  .slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+
+  .slider-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .slider-value span { font-size: 13px; color: var(--muted); }
+
+  .hydration-label { font-size: 13px; color: var(--text); font-weight: 500; }
+
+  input[type=range] {
+    width: 100%;
+    height: 5px;
+    -webkit-appearance: none;
+    background: linear-gradient(to right, var(--accent) var(--pct, 50%), var(--border) var(--pct, 50%));
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px; height: 22px;
+    background: var(--accent);
+    border-radius: 50%;
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 2px 8px rgba(27,79,138,0.3);
+  }
+
+  .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 7px;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* LEVADURA TOGGLE */
+  .levure-toggle {
+    display: flex;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .lev-btn {
+    flex: 1;
+    padding: 11px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .lev-btn.active {
+    background: var(--surface);
+    color: var(--accent);
+    font-weight: 600;
+    border-bottom: 2.5px solid var(--accent);
+  }
+
+  /* CALCULAR BTN */
+  .calc-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    margin-top: 20px;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 16px rgba(27,79,138,0.25);
+    transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+  }
+  .calc-btn:hover {
+    opacity: 0.93;
+    box-shadow: 0 6px 20px rgba(27,79,138,0.35);
+  }
+  .calc-btn:active { transform: scale(0.98); }
+
+  /* RESULTADO */
+  #resultado { margin-top: 32px; display: none; }
+
+  .result-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .result-meta {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* FASE CARD */
+  .fase-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .fase-header {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .fase-num {
+    width: 26px; height: 26px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .fase-title { font-size: 13px; font-weight: 600; color: var(--text); }
+  .fase-time { margin-left: auto; font-size: 11px; color: var(--muted); }
+
+  .fase-body { padding: 14px 16px; }
+
+  .ingredient-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .ingredient-row:last-child { border-bottom: none; }
+
+  .ing-name { font-size: 13px; color: var(--text); font-weight: 500; }
+  .ing-pct { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .ing-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .ing-unit { font-size: 11px; color: var(--muted); margin-left: 3px; }
+
+  /* TOTAIS */
+  .totais-card {
+    background: var(--gold-dim);
+    border: 1px solid rgba(200,169,110,0.35);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-top: 10px;
+  }
+
+  .totais-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  /* TEMP AGUA */
+  .temp-card {
+    background: rgba(27,79,138,0.06);
+    border: 1.5px solid rgba(27,79,138,0.2);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .temp-icon { font-size: 24px; }
+
+  .temp-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--blue-light);
+    line-height: 1;
+  }
+
+  .temp-label { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+  /* NOTA AVPN */
+  .avpn-note {
+    margin-top: 20px;
+    padding: 12px 14px;
+    background: var(--surface);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+    box-shadow: var(--shadow);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 32px 20px 0;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">
+    <div class="logo-icon">🍕</div>
+    <span class="logo-wordmark">Impasto</span>
+  </div>
+  <h1>Calculadora<br><span>Napolitana</span></h1>
+  <div class="avpn-badge">AVPN · Disciplinare 2024</div>
+</header>
+
+<main>
+
+  <!-- TÉCNICA -->
+  <p class="section-label">Técnica de fermentação</p>
+  <div class="tecnica-grid">
+    <div class="tecnica-card active" data-tecnica="direta" onclick="selecionarTecnica(this)">
+      <span class="tecnica-icon">🌾</span>
+      <span class="tecnica-name">Direta</span>
+      <span class="tecnica-desc">Método clássico AVPN. Todos ingredientes juntos.</span>
+    </div>
+    <div class="tecnica-card" data-tecnica="biga" onclick="selecionarTecnica(this)">
+      <span class="tecnica-icon">🧪</span>
+      <span class="tecnica-name">Biga</span>
+      <span class="tecnica-desc">Pré-fermento sólido. Mais sabor e alvéolos.</span>
+    </div>
+    <div class="tecnica-card" data-tecnica="poolish" onclick="selecionarTecnica(this)">
+      <span class="tecnica-icon">💧</span>
+      <span class="tecnica-name">Poolish</span>
+      <span class="tecnica-desc">Pré-fermento líquido. Massa extensível e aromática.</span>
+    </div>
+    <div class="tecnica-card" data-tecnica="autolise" onclick="selecionarTecnica(this)">
+      <span class="tecnica-icon">⏳</span>
+      <span class="tecnica-name">Autólise</span>
+      <span class="tecnica-desc">Repouso pré-amassamento. Glúten mais desenvolvido.</span>
+    </div>
+  </div>
+
+  <!-- PIZZAS + PESO -->
+  <p class="section-label">Quantidade e gramagem</p>
+
+  <div class="input-group">
+    <div class="input-row">
+      <div>
+        <div class="input-label">Número de pizzas</div>
+      </div>
+      <div class="number-input-wrap">
+        <button class="num-btn" onclick="ajustar(&#39;pizzas&#39;, -1)">−</button>
+        <input type="number" inputmode="numeric" class="num-display vazio" id="val-pizzas"
+               value="0" min="0" max="200" step="1"
+               aria-label="Número de pizzas"
+               oninput="editar('pizzas', this)"
+               onblur="normalizar('pizzas')"
+               onkeydown="if(event.key==='Enter'){this.blur();}"
+               onfocus="this.select()">
+        <button class="num-btn" onclick="ajustar(&#39;pizzas&#39;, 1)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <div class="input-row">
+      <div>
+        <div class="input-label">Peso por bola</div>
+        <div class="input-sublabel">AVPN: 200–280 g recomendado</div>
+      </div>
+      <div class="number-input-wrap">
+        <button class="num-btn" onclick="ajustar(&#39;peso&#39;, -10)">−</button>
+        <input type="number" inputmode="numeric" class="num-display vazio" id="val-peso"
+               value="0" min="0" max="320" step="10"
+               aria-label="Peso por bola em gramas"
+               oninput="editar('peso', this)"
+               onblur="normalizar('peso')"
+               onkeydown="if(event.key==='Enter'){this.blur();}"
+               onfocus="this.select()">
+        <button class="num-btn" onclick="ajustar(&#39;peso&#39;, 10)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIDRATAÇÃO -->
+  <p class="section-label">Hidratação</p>
+  <div class="input-group">
+    <div class="slider-wrap">
+      <div class="slider-header">
+        <div class="hydration-label">Percentual de água / farinha</div>
+        <div class="slider-value" id="slider-display">67<span>%</span></div>
+      </div>
+      <input type="range" id="hidratacao" min="55" max="70" value="62" oninput="atualizarSlider(this)" style="--pct: 80%;">
+      <div class="slider-labels">
+        <span>55% · Clássica</span>
+        <span>62% · AVPN base</span>
+        <span>70% · Alta</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPO DE FERMENTO -->
+  <p class="section-label">Tipo de fermento</p>
+  <div class="input-group">
+    <div class="levure-toggle">
+      <button class="lev-btn active" data-tipo="fresco" onclick="selecionarLevura(this)">
+        🧊 Fresco (0,20%)
+      </button>
+      <button class="lev-btn" data-tipo="seco" onclick="selecionarLevura(this)">
+        🫙 Seco ativo (0,07%)
+      </button>
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calcular()">Calcular massa →</button>
+
+  <div class="aviso" id="aviso"></div>
+
+  <!-- RESULTADO -->
+  <div id="resultado" style="display: none;">
+    <div class="result-header">
+      <div class="result-title">Receita</div>
+      <div class="result-meta" id="result-meta"></div>
+    </div>
+    <div id="fases-container">
+      <div class="fase-card">
+        <div class="fase-header">
+          <div class="fase-num">1</div>
+          <div class="fase-title">Mistura direta</div>
+          
+        </div>
+        <div class="fase-body">
+      <div class="ingredient-row">
+        <div>
+          <div class="ing-name">Farinha 00 (W 280–330)</div>
+          <div class="ing-pct">100%</div>
+        </div>
+        <div>
+          <span class="ing-amount">7425</span>
+          <span class="ing-unit">g</span>
+        </div>
+      </div>
+      <div class="ingredient-row">
+        <div>
+          <div class="ing-name">Água fria</div>
+          <div class="ing-pct">67%</div>
+        </div>
+        <div>
+          <span class="ing-amount">4975</span>
+          <span class="ing-unit">g</span>
+        </div>
+      </div>
+      <div class="ingredient-row">
+        <div>
+          <div class="ing-name">Sal fino</div>
+          <div class="ing-pct">2.5%</div>
+        </div>
+        <div>
+          <span class="ing-amount">186</span>
+          <span class="ing-unit">g</span>
+        </div>
+      </div>
+      <div class="ingredient-row">
+        <div>
+          <div class="ing-name">Fermento fresco</div>
+          <div class="ing-pct">0.2%</div>
+        </div>
+        <div>
+          <span class="ing-amount">14.9</span>
+          <span class="ing-unit">g</span>
+        </div>
+      </div><div style="margin-top:10px;padding:10px;background:rgba(255,255,255,0.04);border-radius:6px;font-size:11px;color:var(--muted);line-height:1.5">Dissolva o fermento em um pouco de água fria. Adicione a farinha gradualmente enquanto amassa. Nos 2/3 do amassado, incorpore o sal. Continue amassando até a massa ficar lisa e elástica (~20 min total). ⚠️ Temperatura da massa não deve ultrapassar 23°C.</div></div>
+      </div>
+      <div class="fase-card">
+        <div class="fase-header">
+          <div class="fase-num">2</div>
+          <div class="fase-title">Fermentação em bloco</div>
+          <div class="fase-time">⏱ 60–100 min · 24–26°C</div>
+        </div>
+        <div class="fase-body"><div style="margin-top:10px;padding:10px;background:rgba(255,255,255,0.04);border-radius:6px;font-size:11px;color:var(--muted);line-height:1.5">Unte levemente uma tigela com azeite. Transfira a massa, cubra com plástico filme e deixe descansar em temperatura ambiente.</div></div>
+      </div>
+      <div class="fase-card">
+        <div class="fase-header">
+          <div class="fase-num">3</div>
+          <div class="fase-title">Bolear e maturação</div>
+          <div class="fase-time">⏱ 6–8h (ou 24h ≤4°C)</div>
+        </div>
+        <div class="fase-body"><div style="margin-top:10px;padding:10px;background:rgba(255,255,255,0.04);border-radius:6px;font-size:11px;color:var(--muted);line-height:1.5">Faça as 45 bolas de 280g. Cubra com plástico. Maturar em geladeira se for mais de 8h.</div></div>
+      </div></div>
+
+    <!-- TOTAIS -->
+    <div class="totais-card" id="totais-card">
+      <div class="totais-title">Total de ingredientes</div>
+      <div id="totais-lista">
+      <div class="ingredient-row">
+        <div>
+          <div class="ing-name">Farinha 00 total</div>
+          
+        </div>
+        <div>
+          <span class="ing-amount">7425</span>
+          <span class="ing-unit">g</span>
+        </div>
+      </div>
+      <div class="ingredient-row">
+        <div>
+          <div class="ing-name">Água total</div>
+          
+        </div>
+        <div>
+          <span class="ing-amount">4975</span>
+          <span class="ing-unit">g</span>
+        </div>
+      </div>
+      <div class="ingredient-row">
+        <div>
+          <div class="ing-name">Sal</div>
+          
+        </div>
+        <div>
+          <span class="ing-amount">186</span>
+          <span class="ing-unit">g</span>
+        </div>
+      </div>
+      <div class="ingredient-row">
+        <div>
+          <div class="ing-name">Fermento fresco</div>
+          
+        </div>
+        <div>
+          <span class="ing-amount">14.9</span>
+          <span class="ing-unit">g</span>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- TEMPERATURA DA ÁGUA -->
+    <div class="temp-card" id="temp-card">
+      <div class="temp-icon">🌡️</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div class="temp-value">16°C</div>
+          <div style="font-size:11px;color:var(--muted)">máx. 18°C</div>
+        </div>
+        <div class="temp-label">Temperatura ideal da água</div>
+        <div style="margin-top:6px;font-size:10px;color:var(--muted);line-height:1.6">
+          Fórmula: 60 − T.farinha (22°C) − T.ambiente (22°C) = <strong style="color:#63a5ff">16°C</strong><br>
+          ⚠️ A água nunca deve ultrapassar 18°C · Massa não deve passar de 23°C durante o amassado
+        </div>
+      </div></div>
+
+    <div class="avpn-note" id="avpn-note">📋 Disciplinare AVPN: farinha W 280–330, fermentação total mínima 8h, espessura borda 1–2cm, diâmetro máx. 35cm.</div>
+  </div>
+
+</main>
+
+<footer>
+  Baseado no Disciplinare AVPN 2024 · Impasto v1.0
+</footer>
+
+<script>
+  // ESTADO
+  const state = {
+    pizzas: 0,
+    peso: 0,
+    hidratacao: 62,
+    tecnica: 'direta',
+    levura: 'fresco'
+  };
+
+  // AJUSTAR CONTADORES
+  // LIMITES
+  const LIMITES = {
+    pizzas: { min: 1, max: 200 },
+    peso:   { min: 200, max: 320 }
+  };
+
+  // PINTA O VALOR NO CAMPO
+  function pintar(campo) {
+    const el = document.getElementById(campo === 'pizzas' ? 'val-pizzas' : 'val-peso');
+    el.value = state[campo];
+    el.classList.toggle('vazio', state[campo] === 0);
+  }
+
+  // BOTÕES − / +
+  function ajustar(campo, delta) {
+    const L = LIMITES[campo];
+    if (state[campo] === 0) {
+      // 0 = ainda não definido: o primeiro "+" salta para o mínimo útil
+      state[campo] = delta > 0 ? L.min : 0;
+    } else {
+      const novo = state[campo] + delta;
+      state[campo] = novo < L.min ? 0 : Math.min(L.max, novo);
+    }
+    pintar(campo);
+    limparAviso();
+  }
+
+  // DIGITAÇÃO MANUAL (sem travar enquanto escreve)
+  function editar(campo, el) {
+    const bruto = el.value.trim();
+    if (bruto === '') {
+      state[campo] = 0;
+    } else {
+      const n = parseInt(bruto, 10);
+      state[campo] = isNaN(n) || n < 0 ? 0 : n;
+    }
+    el.classList.toggle('vazio', state[campo] === 0);
+    limparAviso();
+  }
+
+  // AJUSTE AO SAIR DO CAMPO
+  function normalizar(campo) {
+    const L = LIMITES[campo];
+    if (state[campo] > 0) {
+      state[campo] = Math.min(L.max, Math.max(L.min, state[campo]));
+    }
+    pintar(campo);
+  }
+
+  // AVISO DE VALIDAÇÃO
+  function limparAviso() {
+    const av = document.getElementById('aviso');
+    av.classList.remove('visible');
+    av.textContent = '';
+  }
+
+  function validarEntradas() {
+    normalizar('pizzas');
+    normalizar('peso');
+
+    const faltam = [];
+    if (state.pizzas === 0) faltam.push('a quantidade de bolas');
+    if (state.peso === 0) faltam.push('o peso por bola');
+    if (faltam.length === 0) return true;
+
+    const av = document.getElementById('aviso');
+    av.textContent = '⚠️ Antes de calcular, ajuste ' + faltam.join(' e ') + '.';
+    av.classList.add('visible');
+    document.getElementById('resultado').style.display = 'none';
+    return false;
+  }
+
+  // SLIDER HIDRATAÇÃO
+  function atualizarSlider(el) {
+    state.hidratacao = parseInt(el.value);
+    document.getElementById('slider-display').innerHTML = state.hidratacao + '<span>%</span>';
+    const pct = ((state.hidratacao - 55) / (70 - 55)) * 100;
+    el.style.setProperty('--pct', pct + '%');
+  }
+  // Init slider
+  (function() {
+    const sl = document.getElementById('hidratacao');
+    const pct = ((62 - 55) / 15) * 100;
+    sl.style.setProperty('--pct', pct + '%');
+  })();
+
+  // SELECIONAR TÉCNICA
+  function selecionarTecnica(el) {
+    document.querySelectorAll('.tecnica-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    state.tecnica = el.dataset.tecnica;
+  }
+
+  // SELECIONAR LEVURA
+  function selecionarLevura(el) {
+    document.querySelectorAll('.lev-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    state.levura = el.dataset.tipo;
+  }
+
+  // RENDER INGREDIENT ROW
+  function renderIng(nome, gramas, pct) {
+    const pctStr = pct !== undefined ? `<div class="ing-pct">${pct}%</div>` : '';
+    return `
+      <div class="ingredient-row">
+        <div>
+          <div class="ing-name">${nome}</div>
+          ${pctStr}
+        </div>
+        <div>
+          <span class="ing-amount">${gramas}</span>
+          <span class="ing-unit">g</span>
+        </div>
+      </div>`;
+  }
+
+  // RENDER FASE
+  function renderFase(num, titulo, tempo, ingredientes, nota) {
+    let rows = ingredientes.map(i => renderIng(i.nome, i.g, i.pct)).join('');
+    const notaHtml = nota ? `<div style="margin-top:10px;padding:10px;background:rgba(255,255,255,0.04);border-radius:6px;font-size:11px;color:var(--muted);line-height:1.5">${nota}</div>` : '';
+    return `
+      <div class="fase-card">
+        <div class="fase-header">
+          <div class="fase-num">${num}</div>
+          <div class="fase-title">${titulo}</div>
+          ${tempo ? `<div class="fase-time">⏱ ${tempo}</div>` : ''}
+        </div>
+        <div class="fase-body">${rows}${notaHtml}</div>
+      </div>`;
+  }
+
+  // CALCULAR
+  function calcular() {
+    if (!validarEntradas()) return;
+    limparAviso();
+    document.getElementById('resultado').style.display = 'block';
+
+    const H = state.hidratacao / 100;
+    const massaTotal = state.pizzas * state.peso;
+    // Baker's math: F + F*H + F*sal + F*lev = massaTotal
+    const salPct = 0.025; // 2.5%
+    const levPct = state.levura === 'fresco' ? 0.002 : 0.00067; // 0,20% fresco · 0,067% seco (ratio 3:1)
+    let fatorDiv = 1 + H + salPct + levPct;
+
+    const farinha = Math.round(massaTotal / fatorDiv);
+    const agua = Math.round(farinha * H);
+    const sal = Math.round(farinha * salPct);
+    const lev = Math.round(farinha * levPct * 10) / 10;
+
+
+    let fasesHTML = '';
+    let notaAvpn = '';
+    const avisoSeco = state.levura === 'seco'
+      ? ' 💧 Fermento seco: hidrate em pouquíssima água em temperatura ambiente por 5 min antes de usar.'
+      : '';
+
+    if (state.tecnica === 'direta') {
+      fasesHTML = renderFase(1, 'Mistura direta', null, [
+        { nome: 'Farinha 00 (W 280–330)', g: farinha, pct: 100 },
+        { nome: 'Água fria', g: agua, pct: state.hidratacao },
+        { nome: 'Sal fino', g: sal, pct: 2.5 },
+        { nome: state.levura === 'fresco' ? 'Fermento fresco' : 'Fermento seco', g: lev, pct: state.levura === 'fresco' ? 0.2 : 0.07 },
+      ], `Dissolva o fermento em um pouco de água fria.${avisoSeco} Adicione a farinha gradualmente enquanto amassa. Nos 2/3 do amassado, incorpore o sal. Continue amassando até a massa ficar lisa e elástica (~20 min total). ⚠️ Temperatura da massa não deve ultrapassar 23°C.`);
+
+      fasesHTML += renderFase(2, 'Fermentação em bloco', '60–100 min · 24–26°C', [], 'Unte levemente uma tigela com azeite. Transfira a massa, cubra com plástico filme e deixe descansar em temperatura ambiente.');
+      fasesHTML += renderFase(3, 'Bolear e maturação', '6–8h (ou 24h ≤4°C)', [], `Faça as ${state.pizzas} bolas de ${state.peso}g. Cubra com plástico. Maturar em geladeira se for mais de 8h.`);
+      notaAvpn = '📋 Disciplinare AVPN: farinha W 280–330, fermentação total mínima 8h, espessura borda 1–2cm, diâmetro máx. 35cm.';
+
+    } else if (state.tecnica === 'biga') {
+      // BIGA: 40-50% da farinha
+      const bigaPct = 0.45;
+      const farinhaB = Math.round(farinha * bigaPct);
+      const aguaB = Math.round(farinhaB * 0.44); // biga 44% hidratação
+      const levB = Math.round(farinhaB * 0.01 * 10) / 10; // 1% lev fresco ou 0.3% seco
+      const levBiga = state.levura === 'fresco' ? Math.round(farinhaB * 0.002 * 10) / 10 : Math.round(farinhaB * 0.00067 * 10) / 10;
+
+      const farinhaR = farinha - farinhaB;
+      const aguaR = agua - aguaB;
+
+      fasesHTML = renderFase(1, 'Biga (pré-fermento)', '16–18h · 16–18°C', [
+        { nome: 'Farinha 00', g: farinhaB, pct: Math.round(bigaPct*100) },
+        { nome: 'Água fria', g: aguaB, pct: 44 },
+        { nome: state.levura === 'fresco' ? 'Fermento fresco' : 'Fermento seco', g: levBiga, pct: state.levura === 'fresco' ? 1 : 0.3 },
+      ], `Misture grosseiramente (não desenvolva o glúten).${avisoSeco} Cubra com plástico perfurado. Maturar 16–18h a 16–18°C.`);
+
+      fasesHTML += renderFase(2, 'Massa final', null, [
+        { nome: 'Biga maturada (quebrada em pedaços)', g: farinhaB + aguaB },
+        { nome: 'Água fria', g: aguaR, pct: Math.round((aguaR/farinha)*100*10)/10 },
+        { nome: 'Farinha 00 (restante)', g: farinhaR, pct: Math.round((1-bigaPct)*100) },
+        { nome: 'Sal fino', g: sal, pct: 2.5 },
+      ], 'Dissolva a biga na água fria, quebrando bem com as mãos até homogeneizar. Incorpore a farinha restante aos poucos enquanto amassa. Nos 2/3 do amassado, adicione o sal. Amasse até massa lisa (~15 min). ⚠️ Temperatura da massa não deve ultrapassar 23°C.');
+
+      fasesHTML += renderFase(3, 'Bolear e maturação', '60–100 min bloco + 4–5h bolas', [], `Unte uma tigela com azeite, coloque a massa e cubra. Após 60–100 min, forme ${state.pizzas} bolas de ${state.peso}g. Cubra e deixe em temperatura ambiente.`);
+      notaAvpn = '📋 A biga aporta maior complexidade aromática e melhor estrutura do miolo. A temperatura de maturação é crítica: acima de 18°C o pré-fermento acidifica demais.';
+
+    } else if (state.tecnica === 'poolish') {
+      // POOLISH: 30% da farinha, hidratação 100%
+      const poolPct = 0.30;
+      const farinhaP = Math.round(farinha * poolPct);
+      const aguaP = farinhaP; // 100% hidratação = mesma quantidade
+      const levP = state.levura === 'fresco' ? Math.round(farinhaP * 0.002 * 10) / 10 : Math.round(farinhaP * 0.00067 * 10) / 10;
+
+      const farinhaR = farinha - farinhaP;
+      const aguaR = agua - aguaP;
+
+      fasesHTML = renderFase(1, 'Poolish (pré-fermento líquido)', '12–16h · 20°C', [
+        { nome: 'Farinha 00', g: farinhaP, pct: Math.round(poolPct*100) },
+        { nome: 'Água fria', g: aguaP, pct: 100 },
+        { nome: state.levura === 'fresco' ? 'Fermento fresco' : 'Fermento seco', g: levP, pct: state.levura === 'fresco' ? 0.2 : 0.07 },
+      ], `Misture bem até homogeneizar.${avisoSeco} Cubra e fermente 12–16h a 20°C. Pronto quando a superfície estiver reticular (cheia de bolhas) e começar a afundar no centro.`);
+
+      fasesHTML += renderFase(2, 'Massa final', null, [
+        { nome: 'Poolish maturado', g: farinhaP + aguaP, pct: Math.round(poolPct*100) },
+        { nome: 'Água fria (restante)', g: aguaR, pct: Math.round((aguaR/farinha)*100*10)/10 },
+        { nome: 'Farinha 00 (restante)', g: farinhaR, pct: Math.round((1-poolPct)*100) },
+        { nome: 'Sal fino', g: sal, pct: 2.5 },
+      ], 'Dissolva o poolish na água restante. Incorpore a farinha aos poucos enquanto amassa. Nos 2/3 do amassado, incorpore o sal. Amasse 12–15 min até massa lisa e elástica. ⚠️ Temperatura da massa não deve ultrapassar 23°C.');
+
+      fasesHTML += renderFase(3, 'Bolear e maturação', '60–100 min bloco + 4–5h bolas', [], `Unte uma tigela com azeite, coloque a massa e cubra com plástico. Após 60–100 min, forme ${state.pizzas} bolas de ${state.peso}g. Cubra e descanse antes de abrir.`);
+      notaAvpn = '📋 O poolish produz massa com extensibilidade superior e sabor ligeiramente ácido e láctico. Ideal para altas hidratações.';
+
+    } else if (state.tecnica === 'autolise') {
+      const aguaAuto = Math.round(agua * 0.80); // 80% da água total na autólise
+      const aguaResto = agua - aguaAuto;
+      const pctAguaAuto = Math.round((aguaAuto / farinha) * 100 * 10) / 10;
+      const pctAguaResto = Math.round((aguaResto / farinha) * 100 * 10) / 10;
+
+      fasesHTML = renderFase(1, 'Autólise', '30–60 min', [
+        { nome: 'Farinha 00', g: farinha, pct: 100 },
+        { nome: 'Água fria (80%)', g: aguaAuto, pct: pctAguaAuto },
+      ], 'Misture apenas farinha e água (sem sal, sem fermento). A mistura deve ser grosseira. Cubra e repouse 30–60 min. O glúten se formará naturalmente.');
+
+      fasesHTML += renderFase(2, 'Incorporação', null, [
+        { nome: 'Água fria (restante 20%)', g: aguaResto, pct: pctAguaResto },
+        { nome: state.levura === 'fresco' ? 'Fermento fresco' : 'Fermento seco', g: lev, pct: state.levura === 'fresco' ? 0.2 : 0.07 },
+        { nome: 'Sal fino', g: sal, pct: 2.5 },
+      ], `Dissolva o fermento na água restante.${avisoSeco} Adicione à massa autolisada. Amasse e, nos 2/3 do processo, incorpore o sal. Continue até massa lisa (~10–12 min). ⚠️ Temperatura da massa não deve ultrapassar 23°C.`);
+
+      fasesHTML += renderFase(3, 'Fermentação e bolas', '60–100 min bloco + 5–6h bolas', [], `Unte uma tigela com azeite e transfira a massa. Cubra e descanse 60–100 min. Bolear em ${state.pizzas} unidades de ${state.peso}g. Maturar coberto a 24°C.`);
+      notaAvpn = '📋 A autólise reduz o tempo de amassamento em ~30% e produz massa com extensibilidade excepcional, ideal para abrir na mão sem retrair.';
+    }
+
+    // TEMPERATURA DA ÁGUA
+    // Fórmula: T.água = 60 - T.farinha - T.ambiente
+    // Assumimos T.farinha ≈ T.ambiente (farinha armazenada no local)
+    // Referência: T.ambiente padrão 22°C → T.farinha 22°C → T.água = 60-22-22 = 16°C
+    const tAmbiente = 22;
+    const tFarinha = 22;
+    let tAgua = 60 - tFarinha - tAmbiente;
+    tAgua = Math.min(18, Math.max(2, tAgua)); // nunca acima de 18°C
+
+    // TOTAIS
+    const totalMap = { 'Farinha 00 total': farinha, 'Água total': agua, 'Sal': sal };
+    totalMap[state.levura === 'fresco' ? 'Fermento fresco' : 'Fermento seco'] = lev;
+
+    let totaisHTML = Object.entries(totalMap).map(([n, g]) => renderIng(n, g)).join('');
+
+    document.getElementById('fases-container').innerHTML = fasesHTML;
+    document.getElementById('totais-lista').innerHTML = totaisHTML;
+    document.getElementById('temp-card').innerHTML = `
+      <div class="temp-icon">🌡️</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div class="temp-value">${tAgua}°C</div>
+          <div style="font-size:11px;color:var(--muted)">máx. 18°C</div>
+        </div>
+        <div class="temp-label">Temperatura ideal da água</div>
+        <div style="margin-top:6px;font-size:10px;color:var(--muted);line-height:1.6">
+          Fórmula: 60 − T.farinha (${tFarinha}°C) − T.ambiente (${tAmbiente}°C) = <strong style="color:#63a5ff">${tAgua}°C</strong><br>
+          ⚠️ A água nunca deve ultrapassar 18°C · Massa não deve passar de 23°C durante o amassado
+        </div>
+      </div>`;
+    document.getElementById('result-meta').textContent =
+      `${state.pizzas} pizzas · ${state.peso}g · ${state.hidratacao}% hidratação · ${state.tecnica}`;
+    document.getElementById('avpn-note').textContent = notaAvpn;
+
+    const el = document.getElementById('resultado');
+    el.style.display = 'block';
+    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  }
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .catch(err => console.log('SW não registado:', err));
+    });
+  }
+</script>
+
+
+</body></html>
